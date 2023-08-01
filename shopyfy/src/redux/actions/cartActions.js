@@ -5,11 +5,20 @@ const URL = 'https://ekartweb.onrender.com';
 
 export const addToCart = (id, quantity) => async (dispatch) => {
     try {
-        const { data } = await axios.get(`${URL}/product/${id}`, {
+        const [data, setData] = useState();
+        fetch(`${URL}/product/${id}`, {
+            method: "GET",
+            crossDomain: true,
             headers: {
-                'Access-Control-Allow-Origin': '*', // Replace '*' with the appropriate origin if needed
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
             },
-        });
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+            });
 
         dispatch({ type: actionType.ADD_TO_CART, payload: { ...data, quantity } });
     } catch (error) {
