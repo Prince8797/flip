@@ -3,11 +3,6 @@ import Product from '../model/product-schema.js'
 
 
 export const getProducts = async (request, response) => {
-    response.setHeader("Access-Control-Allow-Origin", "*")
-    response.setHeader("Access-Control-Allow-Credentials", "true");
-    response.setHeader("Access-Control-Max-Age", "1800");
-    response.setHeader("Access-Control-Allow-Headers", "content-type");
-    response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
     try {
         const products = await Product.find({}); // .find({}) will take all the data from database.
         response.status(200).json(products);  // .json() sends the products data to the frontend.
@@ -16,12 +11,7 @@ export const getProducts = async (request, response) => {
     }
 }
 
-export const getProductById = async (request, response) => {
-    response.setHeader("Access-Control-Allow-Origin", "*")
-    response.setHeader("Access-Control-Allow-Credentials", "true");
-    response.setHeader("Access-Control-Max-Age", "1800");
-    response.setHeader("Access-Control-Allow-Headers", "content-type");
-    response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
+export const getProductById = async (request, response) => {s
     try {
         const id = request.params.id;
         const product = await Product.findOne({ 'id': id })
