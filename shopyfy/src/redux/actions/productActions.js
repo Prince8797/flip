@@ -41,7 +41,7 @@ export const getProductDetails = (id) => async (dispatch) => {
         })
             .then((res) => res.json())
             .then(({data}) => {
-                dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.jsdispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.js
+                dispatch({ type: GET_PRODUCT_DETAILS_SUCCESS, payload: data }); //dispatch will internally call productReducer.jsdispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.js
             });
     } catch (error) {
         dispatch({ type: GET_PRODUCT_DETAILS_FAIL, payload: error.message });
