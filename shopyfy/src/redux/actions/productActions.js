@@ -6,11 +6,20 @@ const URL = "https://ekartweb.onrender.com";
 
 export const getProducts = () => async (dispatch) => { // (dispatch)=> this is a middleware --> feature of thunk
     try {
-        const { data } = await axios.get(`${URL}/products`, {
+        const [data, setData] = useState();
+        fetch(`${URL}/products`, {
+            method: "GET",
+            crossDomain: true,
             headers: {
-                'Access-Control-Allow-Origin': '*', // Replace '*' with the appropriate origin if needed
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
             },
-        });
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+            });
         dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.js
     } catch (error) {
         dispatch({ type: GET_PRODUCTS_FAIL, payload: error.message });
