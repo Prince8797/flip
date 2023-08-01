@@ -7,7 +7,7 @@ const URL = 'https://ekartweb.onrender.com';
 export const addToCart = (id, quantity) => async (dispatch) => {
     try {
         const [data, setData] = useState();
-        fetch(`${URL}/product/${id}`, {
+        await fetch(`${URL}/product/${id}`, {
             method: "GET",
             crossDomain: true,
             headers: {
@@ -17,11 +17,9 @@ export const addToCart = (id, quantity) => async (dispatch) => {
             },
         })
             .then((res) => res.json())
-            .then((data) => {
-                setData(data);
+            .then(({data}) => {
+                dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.jsdispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.js
             });
-
-        dispatch({ type: actionType.ADD_TO_CART, payload: { ...data, quantity } });
     } catch (error) {
         dispatch({ type: actionType.ADD_TO_CART_ERROR, payload: error.message });
     }
