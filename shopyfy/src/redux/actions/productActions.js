@@ -29,12 +29,20 @@ export const getProducts = () => async (dispatch) => { // (dispatch)=> this is a
 export const getProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: GET_PRODUCT_DETAILS_REQUEST });
-
-        const { data } = await axios.get(`${URL}/product/${id}`, {
+        const [data, setData] = useState();
+        fetch(`${URL}/product/${id}`, {
+            method: "GET",
+            crossDomain: true,
             headers: {
-                'Access-Control-Allow-Origin': '*', // Replace '*' with the appropriate origin if needed
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
             },
-        });
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+            });
 
         dispatch({ type: GET_PRODUCT_DETAILS_SUCCESS, payload: data });
 
