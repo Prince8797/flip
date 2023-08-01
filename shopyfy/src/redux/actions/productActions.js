@@ -8,7 +8,7 @@ const URL = "https://ekartweb.onrender.com";
 export const getProducts = () => async (dispatch) => { // (dispatch)=> this is a middleware --> feature of thunk
     try {
         const [data, setData] = useState();
-        fetch(`${URL}/products`, {
+        await fetch(`${URL}/products`, {
             method: "GET",
             crossDomain: true,
             headers: {
@@ -18,10 +18,9 @@ export const getProducts = () => async (dispatch) => { // (dispatch)=> this is a
             },
         })
             .then((res) => res.json())
-            .then((data) => {
-                setData(data);
+            .then(({data}) => {
+                dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.jsdispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.js
             });
-        dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.js
     } catch (error) {
         dispatch({ type: GET_PRODUCTS_FAIL, payload: error.message });
     }
@@ -31,7 +30,7 @@ export const getProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: GET_PRODUCT_DETAILS_REQUEST });
         const [data, setData] = useState();
-        fetch(`${URL}/product/${id}`, {
+        await fetch(`${URL}/product/${id}`, {
             method: "GET",
             crossDomain: true,
             headers: {
@@ -41,12 +40,9 @@ export const getProductDetails = (id) => async (dispatch) => {
             },
         })
             .then((res) => res.json())
-            .then((data) => {
-                setData(data);
+            .then(({data}) => {
+                dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.jsdispatch({ type: GET_PRODUCTS_SUCCESS, payload: data }); //dispatch will internally call productReducer.js
             });
-
-        dispatch({ type: GET_PRODUCT_DETAILS_SUCCESS, payload: data });
-
     } catch (error) {
         dispatch({ type: GET_PRODUCT_DETAILS_FAIL, payload: error.message });
     }
